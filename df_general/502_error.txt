@@ -1,0 +1,65 @@
+ls
+cd airflow
+ls
+rm -r logs
+
+df -lh / df -h
+
+-------xxxxairflow webserver -p 3000 -Dxxxxx-----
+
+airflow webserver -p 8080 -D
+
+
+AIRFLOW_HOME=/home/ec2-user/airflow
+nohup airflow scheduler >> ${AIRFLOW_HOME}/logs/scheduler.log 2>&1 &
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#To kill all and restart the airflow webserver and scheduler
+AIRFLOW_HOME=/home/ec2-user/airflow
+cat $AIRFLOW_HOME/airflow-webserver.pid | xargs kill -9
+cat /dev/null >  $AIRFLOW_HOME/airflow-webserver.pid
+airflow webserver -p 8080 -D
+
+
+kill $(ps -ef | grep "airflow scheduler" | awk '{print $2}')
+AIRFLOW_HOME=/home/ec2-user/airflow
+nohup airflow scheduler >> ${AIRFLOW_HOME}/logs/scheduler.log 2>&1 &
+
+
+
+# Stop the Airflow web server
+airflow webserver -k all
+
+# Stop the Airflow scheduler
+pkill -f "airflow scheduler"
+
+# Stop the Airflow scheduler using its PID (replace XXXX with the actual PID)
+kill XXXX
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+We found error in File airflow-webserver.err "/home/ec2-user/.local/lib/python3.7/site-packages/lockfile/pidlockfile.py", line 77, in acquire
+ write_pid_to_pidfile(self.path)
+ File "/home/ec2-user/.local/lib/python3.7/site-packages/lockfile/pidlockfile.py", line 161, in write_pid_to_pidfile
+ pidfile_fd = os.open(pidfile_path, open_flags, open_mode)
+FileExistsError: [Errno 17] File exists: '/home/ec2-user/airflow/airflow-webserver-monitor.pid'
+
+
+rm /home/ec2-user/airflow/airflow-webserver-monitor.pid
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	*	
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+airflow debug FAQ 
+
+https://cloud.google.com/composer/docs/composer-2/troubleshooting-dags
+
+
+
