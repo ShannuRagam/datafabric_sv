@@ -1,0 +1,13 @@
+git status
+
+git add <file_name>
+
+git commit -m "first commit"
+
+git push -u origin dev
+
+create pull request
+
+merge pull request
+
+ref:https://www.datacamp.com/tutorial/git-push-pull

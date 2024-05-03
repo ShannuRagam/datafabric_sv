@@ -1,0 +1,8 @@
+Linux commands
+
+https://phoenixnap.com/kb/vmstat-command
+
+
+https://www.scaler.com/topics/how-to-clear-cache-in-linux/
+
+https://cyberpanel.net/blog/processes-in-linux/
