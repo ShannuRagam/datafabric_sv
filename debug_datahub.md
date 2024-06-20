@@ -30,6 +30,14 @@ sudo python3 -m datahub docker nuke
 # backup datahub
 sudo python3 -m datahub docker quickstart --backup
 
+# create/update user.props file
+sudo -i                     #to peek into root folder
+ls -a                       #get the list of dicts in root
+/root/.datahub/user_conf    #path to user.props file mount the same path in docker compose file
+
+
+
+
 # create dump
 docker run -d -e MYSQL_ROOT_PASSWORD=datahub -v /var/lib/docker/volumes/datahub_mysqldata/_data/mysql:/var/lib/mysql --name mrestore mysql:5.7
 docker exec -it mrestore bash
